@@ -1,0 +1,112 @@
+//------------------------------create--------------------------
+
+use('CWH_Blog');
+print(db);
+
+use('database2');
+db.createCollection('firstCollection');
+db.getCollectionInfos();
+db.dropDatabase();
+
+
+
+
+// ------------------------------read----------------------------
+
+
+db.myComments.find({"name":"harry"}).limit(2);
+db.myComments.insertOne({
+    "name":"papai",
+    "age":12,
+    "date":new Date()
+});
+
+
+use('CWH_Blog');
+db.myComments.find();
+db.getCollection('myComments').find();
+
+db.myComments.find({"name":"harry"}).hasNext();
+db.myComments.find({"name":"papai"}).next();
+db.myComments.find({"_id":ObjectId('62ddaa4ea81ae543301960d5')});
+
+
+//https://www.mongodb.com/docs/manual/reference/operator/query/
+
+db.myComments.find({"age":{$eq:41}});
+db.myComments.find({"age":{$lt:41}});
+db.myComments.find({"age":{$gt:41}});
+
+
+
+db.myComments.find().limit(1).count();
+
+db.myComments.find().sort({'_id':1});
+
+
+
+// -----------------------update----------------------
+
+db.myComments.updateOne({"name":"shankar"},{$set:
+{
+    "name":"shankar",
+    "lang":"C++",
+    "age":31
+}},{upsert:true});
+
+
+db.myComments.updateOne({"name":"shankar"},{$inc:
+{
+    "age":10
+}})
+
+
+db.myComments.find();
+
+db.myComments.updateOne({},
+{
+    $rename:{
+    "language":"lang"
+}
+})
+
+db.myComments.updateMany({},
+{
+    $rename:{
+    "lang":"language"
+}
+})
+
+
+db.myComments.updateOne({"age":41},
+{
+    $currentDate:{
+    "date":{ $type: "timestamp" }    
+}
+})
+
+
+db.myComments.updateOne({"school":"skms"},
+{
+    $set:{
+        "date":new Date()
+    }
+});
+
+
+//----------------delete---------------
+
+db.myComments.updateOne({"age":41},
+{
+    $unset:{
+        "date":""
+    }
+});
+
+
+db.myComments.remove({"name":"papai"});
+
+use('CWH_Blog');
+
+
+

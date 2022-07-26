@@ -1,0 +1,29 @@
+mongod is Mongo Deamon which basically is host process for the database.
+mongo is the cmd line shell that connects to a specific instance of mongod.
+
+
+mysql                           mondodb
+
+database                    database
+table                       collection of documents
+columns                     fields in documents
+rows                        values in documents
+
+a document consists of fields and values - (field : value)
+
+BSON - mongodb stores data in Bson as :
+
+JSON is a text-based format, and text parsing is very slow
+
+JSON’s readable format is far from space-efficient, another database concern
+
+JSON only supports a limited number of basic data types
+
+                       JSON                                            BSON
+
+Encoding           UTF-8 String                                       Binary
+
+Data Support     String, Boolean,             String, Boolean, Number (Integer, Float, Long, Decimal128...), 
+                  Number, Array                                Array, Date, Raw Binary
+
+Readability     Human and Machine                   only machine readable                                Machine Only

@@ -1,0 +1,137 @@
+--------database---------------
+
+1) show databases/dbs; --> shows all databases
+
+2) use CWH_Blog; --> create or use CWH_Blog database for doing operations
+the database is created only after insert some data like collection, with only use('databaseName') only the context changes, the actual database is  created ony after some data is inserted.
+
+3) db/print(db);  --> show the database being used currently
+
+4) databaseName.dropDatabase(); --> delete databaseName database.
+
+
+--------------collection/table---------------
+
+5) show collections/db.getCollectionInfos(); --> shows all collections
+
+
+6) db.createCollection('name');
+
+7) db.collectionName.drop();
+
+
+--------------documents/rows---------------//create//---------------------------------------------
+
+8)db.collectionName.insertOne({javascript object}); -->insert one document/row as js object
+
+9)db.collectionName.insertMany([{javascript object},{javacript object}]);  -->insert more than one document/row as array of js objects
+
+--------------show entire collection-------//read//------------------------------------------------
+
+10)db.collectionName.find() OR db.getCollection('myComments').find();  --> select all documents/rows in a collection/table
+find() returs cursor
+
+11)db.collectionName.find().limit(n); --> select n number documents/rows in a collection/table
+limit() returs cursor
+
+----------------------query filter operator--------------------
+
+db.myComments.find({"age":{$lt:25}});
+db.myComments.find({"age":{$lte:25}});
+db.myComments.find({"age":{$gt:25}});
+db.myComments.find({"age":{$gte:25}});
+db.myComments.find({"age":{$eq:25}});
+
+
+---------show particular document in collection-------
+
+12)db.collectionName.find({"name":"harry"});
+
+13)db.myComments.find().count(); --> count number of documents in output
+
+14)db.myComments.find({"name":"harry"}).hasNext(); --> aur koi document hai kya after the document pointed by returned cursor
+
+15)db.myComments.find({"name":"harry"}).next(); --> 
+
+
+---------------------sort---------------------------
+16)db.myComments.find().sort({'_id':1}); --> sort the returned documents 'key' : 1 means in ascending, -1 means in descending
+
+
+
+--------------------------------//update//----------------------------------------------------------
+17)db.myComments.updateOne({" _id":"62ddaa4ea81ae543301960d5"},{$set:
+{
+    "name":"nabajyoti",
+    "lang":"python",
+    "age":21
+}})
+
+
+-----------------update operators---------------
+
+If the name of the new field is the same as an existing field name (including _id), 
+$set overwrites the existing value of that field with the value of the specified expression.
+
+18)db.myComments.updateOne({"name":"shankar"},
+{
+    $set:{            -->set inserts news field in a document
+    "name":"shankar",
+    "lang":"C++",
+    "age":31
+    }
+},{upsert:true});
+
+both insert and update .....mane in case shankar name er kunu object na thakle , ekta notun object create korbo
+
+--------increment operator---------
+db.myComments.updateOne({"name":"shankar"},
+{
+    $inc:{
+    "age":10  -->increment age by 10
+    }
+})
+
+-----------unset operator--------------
+
+db.myComments.updateOne({"age":41},
+{
+    $unset:{
+        "date":""    --> value of field doesnot matter
+    }
+});
+
+----------rename operator--------------
+db.myComments.updateOne({"name":"shankar"},
+{
+    $rename:{
+    "name":"shankar mahadev" -->changes name of field from shankar to shankar mahadev
+    }
+})
+
+db.myComments.updateMany({},   -->matches all the documents, updates whereever lang is present to language
+{
+    $rename:{
+    "lang":"language"
+}
+})
+
+
+---------currentDate operator-------
+db.myComments.updateOne({"age":41},
+{
+    $currentDate:{
+    "date":{ $type: "timestamp" }    
+}
+})
+
+
+--------------------//delete//----------------------
+
+db.myComments.remove({"name":"papai"});  -->deletes a document.
+
+
+
+
+
+
